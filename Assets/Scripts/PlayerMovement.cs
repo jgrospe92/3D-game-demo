@@ -4,38 +4,28 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    // Instantiate the Rigibody
+    Rigidbody rb;
+    [SerializeField] private float mvmtSpeed = 5f;
+    [SerializeField] private float jumpForce = 5f;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody>(); // Get this rigidbody of the assigned script
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("space"))
-        {
-            GetComponent<Rigidbody>().velocity = new Vector3(0,5,0);
-        }
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
 
-        if (Input.GetKey("up"))
-        {
-            GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 5);
-        }
-      
-        if (Input.GetKey("down"))
-        {
-            GetComponent<Rigidbody>().velocity = new Vector3(0, 0, -5);
-        }
+        rb.velocity = new Vector3(horizontalInput * mvmtSpeed, rb.velocity.y,verticalInput * mvmtSpeed);
 
-        if (Input.GetKey("right"))
+        if (Input.GetButtonDown("Jump"))
         {
-            GetComponent<Rigidbody>().velocity = new Vector3(5, 0, 0);
-        }
-
-        if (Input.GetKey("left"))
-        {
-            GetComponent<Rigidbody>().velocity = new Vector3(-5, 0, 0);
+            rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
         }
 
     }
