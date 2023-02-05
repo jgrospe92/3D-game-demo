@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
     // Instantiate the Rigibody
     Rigidbody rb;
     [SerializeField] private float mvmtSpeed = 5f;
-    [SerializeField] private float jumpForce = 5f;
+    [SerializeField] private float jumpForce = 3f;
 
     [SerializeField] Transform groundCheck;
     [SerializeField] LayerMask ground;
@@ -28,13 +28,28 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
-            rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
+            Jump();
         }
 
+    }
+
+    void Jump()
+    {
+        rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
     }
 
     bool IsGrounded()
     {
         return Physics.CheckSphere(groundCheck.position, .1f, ground); ;
+    }
+
+    // check if player object collided with enemy head
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy Head"))
+        {
+            Destroy(collision.transform.parent.gameObject); // refers to the enemy parent
+            Jump(); // when it collided, the player jumps
+        }
     }
 }
