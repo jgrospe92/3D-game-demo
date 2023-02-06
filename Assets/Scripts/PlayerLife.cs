@@ -5,17 +5,24 @@ using UnityEngine.SceneManagement;
 
 public class PlayerLife : MonoBehaviour
 {
+    // condition to see if player is dead;
+    bool isDead = false;
+
     private void FixedUpdate()
     {
-        if (GetComponent<Rigidbody>().transform.position.y < 0.30f)
-        {
-            Die();
-        }
+        //if (GetComponent<Rigidbody>().transform.position.y < 0.30f)
+        //{
+        //    Die();
+        //}
+        if (transform.position.y < -4f && !isDead) Die();
     }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
+            GetComponent<MeshRenderer>().enabled = false;
+            GetComponent<Rigidbody>().isKinematic = true;
+            GetComponent<PlayerMovement>().enabled = false;
             Die();
         }
         
@@ -23,9 +30,8 @@ public class PlayerLife : MonoBehaviour
 
     void Die()
     {
-        GetComponent<MeshRenderer>().enabled = false;
-        GetComponent<Rigidbody>().isKinematic = true;
-        GetComponent<PlayerMovement>().enabled = false;
+        // player is dead
+        isDead = true;
 
         // Other way to do is Destroy() the player gameobject
 

@@ -26,7 +26,7 @@ public class WaypointFollower : MonoBehaviour
                 currentWaypointIndex = 0;
             }
         }
-        // refer to this; it get the gameobject transform 
+        // refer to this; it get the gameobject transform
         transform.position = Vector3.MoveTowards(transform.position,
             waypoints[currentWaypointIndex].transform.position, speed * Time.deltaTime);
     }

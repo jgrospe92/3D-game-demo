@@ -13,6 +13,8 @@ public class StickyPlatform : MonoBehaviour
         {
             collision.gameObject.transform.SetParent(transform);
         }
+
+   
     }
 
     private void OnCollisionExit(Collision collision)
