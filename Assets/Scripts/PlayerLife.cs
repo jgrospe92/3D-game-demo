@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class PlayerLife : MonoBehaviour
 {
+    [SerializeField] AudioSource deathsfx;
+
     // condition to see if player is dead;
     bool isDead = false;
 
@@ -37,7 +39,9 @@ public class PlayerLife : MonoBehaviour
 
         // after the player die, calls the ReloadLevel() function
         Invoke(nameof(ReloadLevel), 1.3f);
-      
+        deathsfx.Play();
+
+
     }
 
     private void ReloadLevel()
